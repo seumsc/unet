@@ -1,8 +1,10 @@
 from model import *
 from data import *
+import os
 
 #os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
+MAIN_PATH = "data/membrane"
 
 data_gen_args = dict(rotation_range=0.2,
                     width_shift_range=0.05,
@@ -11,7 +13,7 @@ data_gen_args = dict(rotation_range=0.2,
                     zoom_range=0.05,
                     horizontal_flip=True,
                     fill_mode='nearest')
-myGene = trainGenerator(2,'data/membrane/train','image','label',data_gen_args,save_to_dir = None)
+myGene = trainGenerator(2,os.path.join(MAIN_PATH,'train'),'image','label',data_gen_args,save_to_dir = None)
 
 model = unet()
 model_checkpoint = ModelCheckpoint('unet_membrane.hdf5', monitor='loss',verbose=1, save_best_only=True)
